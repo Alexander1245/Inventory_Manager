@@ -2,11 +2,13 @@ package com.dart69.inventory.inventorymanager.core.results.domain
 
 sealed interface Results<out T> {
 
-    @JvmInline
-    value class Success<T>(val data: T) : Results<T>
+    sealed interface FinalResults<T>: Results<T>
 
     @JvmInline
-    value class Error(val throwable: Throwable): Results<Nothing>
+    value class Success<T>(val data: T) : FinalResults<T>
+
+    @JvmInline
+    value class Error(val throwable: Throwable): FinalResults<Nothing>
 
     data object Loading : Results<Nothing>
 }
